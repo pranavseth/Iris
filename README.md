@@ -1,5 +1,6 @@
 # Iris
-#Importing libraries pandas and matplotlib. Also importing from library sklearn.
+Importing libraries pandas and matplotlib. Also importing from library sklearn.
+
 import pandas
 from pandas.tools.plotting import scatter_matrix
 import matplotlib.pyplot as plt
@@ -14,27 +15,36 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 from sklearn import model_selection
 
-#Loading .csv from an external URL and naming the columns. Storing in dataset.
+
+Loading .csv from an external URL and naming the columns. Storing in dataset.
+
 url="https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
 names=['sepal-length', 'sepal-width', 'petal-lenth', 'petal-width', 'class']
 dataset=pandas.read_csv(url, names=names)
 
 
-#Visualising the data for some context.
-#Univariate plots
+Visualising the data for some context.
+
+Univariate plots
+
 dataset.plot(kind='box', subplots=True, layout=(2,2), sharex=False, sharey=False)
 plt.show()
-#Histogram
+
+Histogram
 dataset.hist()
 plt.show()
-#Multivariate Plots
-#Scatter Matrix
+
+Multivariate Plots
+
+Scatter Matrix
 scatter_matrix(dataset)
 plt.show()
 
 
-#Creating a validation dataset
-#We will split the loaded dataset into two, 80% of which we will use to train our models and we are going to hold back some data that #the algorithms will not get to see and we will use this data to get a second and independent idea of how accurate the best model might #actually be.
+Creating a validation dataset
+
+We will split the loaded dataset into two, 80% of which we will use to train our models and we are going to hold back some data that the algorithms will not get to see and we will use this data to get a second and independent idea of how accurate the best model might actually be.
+
 array=dataset.values
 X=array[:,0:4]
 Y=array[:,4]
@@ -42,7 +52,9 @@ validation_size=0.2
 seed=7
 x_train, X_validation, Y_train, Y_validation=model_selection.train_test_split(X,Y, test_size=validation_size, random_state=seed)
 
-#Applying each algorithm to the dataset by iteration.
+
+Applying each algorithm to the dataset by iteration.
+
 models = []
 models.append(('LR', LogisticRegression()))
 models.append(('LDA', LinearDiscriminantAnalysis()))
@@ -50,7 +62,9 @@ models.append(('KNN', KNeighborsClassifier()))
 models.append(('CART', DecisionTreeClassifier()))
 models.append(('NB', GaussianNB()))
 models.append(('SVM', SVC()))
-#Evaluate each model in turn
+
+Evaluate each model in turn
+
 results = []
 names = []
 for name, model in models:
@@ -61,14 +75,18 @@ for name, model in models:
 	msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
 	print(msg)
 
-#Visualisation of Comparison
+
+Visualisation of Comparison
+
 fig=plt.figure()
 fig.suptitle("Comparison")
 x=fig.add_subplot(1,1,1)
 plt.boxplot(results)
 ax.set_xticklabels(names)
 
-#Making predictions based on the validation dataset. We will use K-Nearest Neighbors as it has the largest estimated accuracy score.
+
+Making predictions based on the validation dataset. We will use K-Nearest Neighbors as it has the largest estimated accuracy score.
+
 knn = KNeighborsClassifier()
 knn.fit(X_train, Y_train)
 predictions = knn.predict(X_validation)
