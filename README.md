@@ -94,4 +94,4 @@ We will split the loaded dataset into two, 80% of which we will use to train our
     print(confusion_matrix(Y_validation, predictions))
     print(classification_report(Y_validation, predictions)) 
 
-**Courtsey: https://machinelearningmastery.com/machine-learning-in-python-step-by-step/"
+**Courtsey: https://machinelearningmastery.com/machine-learning-in-python-step-by-step/**
